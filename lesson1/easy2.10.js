@@ -11,5 +11,5 @@ let retireYear = year + yearsLeft;
 
 console.log(
   `It's ${year}. You will retire in ${retireYear}.\n
-  You have only ${yearsLeft} years of work to go!
-  `)
+  You have only ${yearsLeft} years of work to go!`
+);

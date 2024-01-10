@@ -1,8 +1,19 @@
 const readline = require("readline-sync");
 const VALID_CHOICES = ["rock", "paper", "scissors", "spock", "lizard"];
+const POINTS_TO_WIN = 3;
 
-function prompt(message) {
+function promptLocal(message) {
   console.log(`=> ${message}`);
+}
+
+function explainRules() {
+  console.clear();
+  promptLocal("Welcome to rock, paper, scissors, spock, lizard.");
+  promptLocal("This is a variation of rock, paper, scissors, adding two choices.");
+  promptLocal("The rules for the game are Scissors cuts Paper covers Rock crushes");
+  promptLocal("Lizard poisons Spock smashes Scissors decapitates Lizard eats");
+  promptLocal("Paper disproves Spock vaporizes Rock crushes Scissors.");
+  promptLocal("Man versus machine. First to 3 points wins. Good luck!");
 }
 
 let validChoicesShorthand = [];
@@ -51,15 +62,15 @@ function playerWins(choice, computerChoice) {
 }
 
 function displayWinner(choice, computerChoice) {
-  prompt(`You chose ${choice}, computer chose ${computerChoice}.`);
+  promptLocal(`You chose ${choice}, computer chose ${computerChoice}.`);
   if (playerWins(choice, computerChoice)) {
-    prompt("You win!");
+    promptLocal("You win!");
     return ("You win!");
   } else if (choice === computerChoice) {
-    prompt("It's a tie!");
+    promptLocal("It's a tie!");
     return ("It's a tie!");
   } else {
-    prompt("Computer wins!");
+    promptLocal("Computer wins!");
     return ("Computer wins!");
   }
 }
@@ -68,6 +79,29 @@ let result;
 let playerScore = 0;
 let computerScore = 0;
 let highScore = 0;
+
+function playOneRound() {
+  promptLocal(`Choose one: ${combinedChoicesAndShorthand.join(", ")}.`);
+  let choice = readline.question();
+
+  while (!validChoicesShorthand.includes(choice.toLowerCase()) &&
+         !VALID_CHOICES.includes(choice.toLowerCase())) {
+    promptLocal("That's not a valid choice.");
+    choice = readline.question();
+  }
+
+  console.clear();
+  if (choice.length < 3) {
+    choice = convertShorthandToFullChoice(choice.toLowerCase());
+  } else {
+    choice = choice.toLowerCase();
+  }
+
+  let randomIndex = Math.floor(Math.random() * VALID_CHOICES.length);
+  let computerChoice = VALID_CHOICES[randomIndex];
+
+  result = displayWinner(choice, computerChoice);
+}
 
 function addToScore() {
   if (result === "You win!") {
@@ -83,32 +117,21 @@ function refreshHighScore() {
   highScore = Math.max(playerScore, computerScore);
 }
 
+function printScore() {
+  if (highScore === POINTS_TO_WIN) {
+    promptLocal(`We have a winner! Final score is you: ${playerScore}, computer: ${computerScore}.`);
+  } else {
+    promptLocal(`Current score is you: ${playerScore}, computer: ${computerScore}.`);
+  }
+}
+
 while (true) {
+  explainRules();
   while (true) {
-
-    prompt(`Choose one: ${combinedChoicesAndShorthand.join(", ")}.`);
-    let choice = readline.question();
-
-    while (!validChoicesShorthand.includes(choice)) {
-      prompt("That's not a valid choice.");
-      choice = readline.question();
-    }
-
-    choice = convertShorthandToFullChoice(choice);
-
-    let randomIndex = Math.floor(Math.random() * VALID_CHOICES.length);
-    let computerChoice = VALID_CHOICES[randomIndex];
-
-    result = displayWinner(choice, computerChoice);
-
+    playOneRound();
     addToScore();
     refreshHighScore();
-
-    if (highScore === 3) {
-      prompt(`We have a winner! Final score is you: ${playerScore}, computer: ${computerScore}.`);
-    } else {
-      prompt(`Current score is you: ${playerScore}, computer: ${computerScore}.`);
-    }
+    printScore();
 
     if (highScore >= 3) {
       highScore = 0;
@@ -117,11 +140,13 @@ while (true) {
       break;
     }
   }
-  prompt("Play again? (y/n)");
+
+  promptLocal("Play again? (y/n)");
   let answer = readline.question().toLowerCase();
   while (answer[0] !== "y" && answer[0] !== "n") {
-    prompt("Please ansewr 'y' or 'n'.");
-    answer = readline.question.toLowerCase();
+    promptLocal("Please answer 'y' or 'n'.");
+    answer = readline.question().toLowerCase();
   }
+
   if (answer[0] !== "y") break;
 }

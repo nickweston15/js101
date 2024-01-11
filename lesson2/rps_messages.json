@@ -1,0 +1,31 @@
+{
+  "en" : {
+    "welcome" : "Welcome to Rock, Paper, Scissors, Spock, Lizard!",
+    "rules1" : "This is a variation of rock, paper, scissors, adding two choices.",
+    "rules2" : "The rules for the game are Scissors cuts Paper covers Rock crushes",
+    "rules3" :  "Lizard poisons Spock smashes Scissors decapitates Lizard eats",
+    "rules4" :  "Paper disproves Spock vaporizes Rock crushes Scissors.",
+    "good luck" : "Man versus machine. First to 3 points wins. Good luck!",
+    "player win" : "You win!",
+    "computer win" : "Computer wins!",
+    "tie" : "It's a tie!",
+    "valid choice" : "That's not a valid choice.",
+    "restart" : "Play again? (y/n)",
+    "vaild restart" : "Please answer 'y' or 'n'."
+  },
+
+  "es" : {
+    "welcome" : "Hola!",
+    "rules1" : "XX",
+    "rules2" : "XX",
+    "rules3" :  "XX",
+    "rules4" :  "XX",
+    "good luck" : "XX",
+    "player win" : "XX",
+    "computer win" : "XX",
+    "tie" : "XX",
+    "valid choice" : "XX",
+    "restart" : "XX",
+    "vaild restart" : "XX"
+  }
+}

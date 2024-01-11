@@ -1,19 +1,30 @@
 const readline = require("readline-sync");
 const VALID_CHOICES = ["rock", "paper", "scissors", "spock", "lizard"];
 const POINTS_TO_WIN = 3;
+const MESSAGES = require("./rps_messages.json");
+const LANGUAGE = "en";
 
 function promptLocal(message) {
   console.log(`=> ${message}`);
 }
 
+function promptFile(key) {
+  let message = messages(key, LANGUAGE);
+  console.log(`=> ${message}`);
+}
+
+function messages(message, lang = "en") {
+  return MESSAGES[lang][message];
+}
+
 function explainRules() {
   console.clear();
-  promptLocal("Welcome to rock, paper, scissors, spock, lizard.");
-  promptLocal("This is a variation of rock, paper, scissors, adding two choices.");
-  promptLocal("The rules for the game are Scissors cuts Paper covers Rock crushes");
-  promptLocal("Lizard poisons Spock smashes Scissors decapitates Lizard eats");
-  promptLocal("Paper disproves Spock vaporizes Rock crushes Scissors.");
-  promptLocal("Man versus machine. First to 3 points wins. Good luck!");
+  promptFile("welcome");
+  promptFile("rules1");
+  promptFile("rules2");
+  promptFile("rules3");
+  promptFile("rules4");
+  promptFile("good luck");
 }
 
 let validChoicesShorthand = [];
@@ -64,13 +75,13 @@ function playerWins(choice, computerChoice) {
 function displayWinner(choice, computerChoice) {
   promptLocal(`You chose ${choice}, computer chose ${computerChoice}.`);
   if (playerWins(choice, computerChoice)) {
-    promptLocal("You win!");
+    promptFile("player win");
     return ("You win!");
   } else if (choice === computerChoice) {
-    promptLocal("It's a tie!");
+    promptFile("tie");
     return ("It's a tie!");
   } else {
-    promptLocal("Computer wins!");
+    promptFile("computer win");
     return ("Computer wins!");
   }
 }
@@ -86,7 +97,7 @@ function playOneRound() {
 
   while (!validChoicesShorthand.includes(choice.toLowerCase()) &&
          !VALID_CHOICES.includes(choice.toLowerCase())) {
-    promptLocal("That's not a valid choice.");
+    promptFile("valid choice");
     choice = readline.question();
   }
 
@@ -141,10 +152,10 @@ while (true) {
     }
   }
 
-  promptLocal("Play again? (y/n)");
+  promptFile("restart");
   let answer = readline.question().toLowerCase();
   while (answer[0] !== "y" && answer[0] !== "n") {
-    promptLocal("Please answer 'y' or 'n'.");
+    promptFile("valid restart");
     answer = readline.question().toLowerCase();
   }
 

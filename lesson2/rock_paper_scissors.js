@@ -144,20 +144,24 @@ while (true) {
     refreshHighScore();
     printScore();
 
-    if (highScore >= 3) {
+    if (highScore >= POINTS_TO_WIN) {
       highScore = 0;
       playerScore = 0;
       computerScore = 0;
       break;
     }
   }
-
   promptFile("restart");
   let answer = readline.question().toLowerCase();
   while (answer[0] !== "y" && answer[0] !== "n") {
     promptFile("valid restart");
     answer = readline.question().toLowerCase();
   }
-
-  if (answer[0] !== "y") break;
 }
+
+/* Things to try:
+- use an object to store choice name, abbreviation, & what is beats
+  - tried this but requires a lot of rework
+- use an object literal for the score
+- make main while loop shorter
+- no global variables (use a runProgram() function?) */
